@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sreyan — Developer for Hire</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:          #080D1A;
+      --surface:     #111827;
+      --surface2:    #161E30;
+      --accent:      #00C9A7;
+      --accent-glow: rgba(0, 201, 167, 0.18);
+      --text:        #EEF2FF;
+      --muted:       #7B8BAD;
+      --border:      rgba(255, 255, 255, 0.07);
+      --max:         880px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      inset: 0 0 auto 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px 48px;
+      background: rgba(8, 13, 26, 0.88);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .logo {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 18px;
+      letter-spacing: -0.5px;
+      color: var(--text);
+    }
+    .logo span { color: var(--accent); }
+
+    .nav-hire {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 600;
+      font-size: 14px;
+      padding: 10px 22px;
+      background: var(--accent);
+      color: #080D1A;
+      border-radius: 6px;
+      text-decoration: none;
+      transition: opacity 0.18s;
+    }
+    .nav-hire:hover { opacity: 0.82; }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 130px 48px 80px;
+      max-width: var(--max);
+      margin: 0 auto;
+    }
+
+    .eyebrow {
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.11em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 28px;
+    }
+
+    .hero-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(44px, 8vw, 76px);
+      font-weight: 700;
+      line-height: 1.04;
+      letter-spacing: -2.5px;
+      margin-bottom: 28px;
+    }
+
+    .word-slot {
+      display: inline-block;
+      color: var(--accent);
+      position: relative;
+    }
+
+    .rotating-word {
+      transition: opacity 0.35s ease, transform 0.35s ease;
+    }
+
+    .rotating-word.out {
+      opacity: 0;
+      transform: translateY(10px);
+      pointer-events: none;
+    }
+
+    .hero-sub {
+      max-width: 480px;
+      font-size: 17px;
+      color: var(--muted);
+      line-height: 1.75;
+      margin-bottom: 44px;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 600;
+      font-size: 16px;
+      padding: 15px 34px;
+      background: var(--accent);
+      color: #080D1A;
+      border-radius: 8px;
+      text-decoration: none;
+      display: inline-block;
+      transition: transform 0.18s, box-shadow 0.18s;
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 28px var(--accent-glow);
+    }
+
+    .link-ghost {
+      font-size: 15px;
+      color: var(--muted);
+      text-decoration: none;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 2px;
+      transition: color 0.18s, border-color 0.18s;
+    }
+    .link-ghost:hover { color: var(--text); border-color: var(--muted); }
+
+    /* ── SHARED SECTION SHELL ── */
+    .section {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 80px 48px;
+    }
+
+    .section-rule { border: none; border-top: 1px solid var(--border); }
+
+    .label {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 14px;
+    }
+
+    .heading {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(28px, 4vw, 42px);
+      font-weight: 700;
+      letter-spacing: -1.2px;
+      line-height: 1.1;
+      margin-bottom: 48px;
+    }
+
+    /* ── SERVICES ── */
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 20px;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 30px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .card:hover {
+      border-color: rgba(0, 201, 167, 0.28);
+      transform: translateY(-4px);
+    }
+
+    .card-icon {
+      width: 42px;
+      height: 42px;
+      background: var(--accent-glow);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      margin-bottom: 20px;
+    }
+
+    .card-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 600;
+      font-size: 17px;
+      margin-bottom: 8px;
+    }
+
+    .card-desc {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.7;
+      margin-bottom: 20px;
+    }
+
+    .card-price {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--accent);
+    }
+
+    /* ── PROCESS ── */
+    .steps { display: flex; flex-direction: column; }
+
+    .step {
+      display: flex;
+      gap: 36px;
+      padding: 30px 0;
+      border-bottom: 1px solid var(--border);
+      align-items: flex-start;
+    }
+    .step:last-child { border-bottom: none; }
+
+    .step-num {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--accent);
+      letter-spacing: 0.06em;
+      min-width: 28px;
+      padding-top: 3px;
+    }
+
+    .step h3 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 600;
+      font-size: 17px;
+      margin-bottom: 5px;
+    }
+
+    .step p { font-size: 14px; color: var(--muted); }
+
+    /* ── CONTACT ── */
+    .contact-wrap { padding-top: 0; }
+
+    .contact-box {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 60px 48px;
+      text-align: center;
+    }
+
+    .contact-box .heading { margin-bottom: 12px; }
+
+    .contact-sub {
+      color: var(--muted);
+      font-size: 17px;
+      margin-bottom: 44px;
+    }
+
+    .contact-btns {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn-wa {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 600;
+      font-size: 16px;
+      padding: 15px 32px;
+      background: #22C55E;
+      color: #fff;
+      border-radius: 8px;
+      text-decoration: none;
+      display: inline-block;
+      transition: transform 0.18s, box-shadow 0.18s;
+    }
+    .btn-wa:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 26px rgba(34, 197, 94, 0.28);
+    }
+
+    .btn-mail {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 600;
+      font-size: 16px;
+      padding: 15px 32px;
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      text-decoration: none;
+      display: inline-block;
+      transition: border-color 0.18s;
+    }
+    .btn-mail:hover { border-color: var(--muted); }
+
+    /* ── FOOTER ── */
+    footer {
+      text-align: center;
+      padding: 28px 48px;
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 640px) {
+      nav          { padding: 16px 20px; }
+      .hero        { padding: 110px 20px 60px; }
+      .hero-title  { letter-spacing: -1.5px; }
+      .section     { padding: 60px 20px; }
+      .contact-box { padding: 36px 20px; }
+      footer       { padding: 24px 20px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .rotating-word       { transition: none; }
+      .btn-primary:hover,
+      .btn-wa:hover,
+      .card:hover          { transform: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">Sreyan<span>.</span></div>
+  <a href="#contact" class="nav-hire">Hire Me</a>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <p class="eyebrow">Available now · India &amp; worldwide</p>
+  <h1 class="hero-title">
+    I build<br>
+    <span class="word-slot"><span class="rotating-word" id="rword">Landing Pages</span></span><br>
+    for your business.
+  </h1>
+  <p class="hero-sub">
+    Fast turnaround. Real results. I use the latest AI tools to ship websites, web apps, and chatbots — at a fraction of agency cost.
+  </p>
+  <div class="hero-actions">
+    <a href="#contact" class="btn-primary">Get a free quote →</a>
+    <a href="#services" class="link-ghost">See what I offer</a>
+  </div>
+</div>
+
+<hr class="section-rule" style="max-width:880px; margin:0 auto 0 auto; padding:0 48px; border:none; border-top:1px solid var(--border);">
+
+<!-- SERVICES -->
+<div class="section" id="services">
+  <p class="label">What I offer</p>
+  <h2 class="heading">Pick your starting point</h2>
+  <div class="cards">
+    <div class="card">
+      <div class="card-icon">🌐</div>
+      <div class="card-title">Landing Page</div>
+      <p class="card-desc">A fast, sharp page that turns visitors into leads. Perfect for a product, service, or event launch.</p>
+      <div class="card-price">Starting ₹3,000</div>
+    </div>
+    <div class="card">
+      <div class="card-icon">⚙️</div>
+      <div class="card-title">Web App</div>
+      <p class="card-desc">A working app — dashboards, forms, tools — built with React and Python and deployed live.</p>
+      <div class="card-price">Starting ₹8,000</div>
+    </div>
+    <div class="card">
+      <div class="card-icon">🤖</div>
+      <div class="card-title">AI Chatbot</div>
+      <p class="card-desc">A smart bot trained on your business that answers customer questions 24/7, right on your site.</p>
+      <div class="card-price">Starting ₹10,000</div>
+    </div>
+  </div>
+</div>
+
+<!-- PROCESS -->
+<div class="section" id="how" style="padding-top:0;">
+  <p class="label">The process</p>
+  <h2 class="heading">Done in 3 steps.<br>No back-and-forth.</h2>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">01</div>
+      <div>
+        <h3>Tell me what you need</h3>
+        <p>Send a WhatsApp message or email describing your business and what you want built. Takes 5 minutes.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">02</div>
+      <div>
+        <h3>I build it</h3>
+        <p>You get a design preview within 24 hours and a working version in 3–5 days, depending on scope.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">03</div>
+      <div>
+        <h3>You approve and go live</h3>
+        <p>One round of revisions included. Once you're happy, I deploy it and hand over all the files — it's yours.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CONTACT -->
+<div class="section contact-wrap" id="contact">
+  <div class="contact-box">
+    <h2 class="heading">Ready to start?</h2>
+    <p class="contact-sub">Tell me what you need. I reply within a few hours.</p>
+    <div class="contact-btns">
+      <a href="https://wa.me/918555801462" class="btn-wa">💬 WhatsApp me</a>
+      <a href="mailto:sreyankishore@gmail.com" class="btn-mail">📧 Email me</a>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>© 2026 Sreyan · Built fast, built right.</footer>
+
+<script>
+  const words = ['Landing Pages', 'AI Chatbots', 'Web Apps', 'Automation Tools'];
+  let i = 0;
+  const el = document.getElementById('rword');
+
+  setInterval(() => {
+    el.classList.add('out');
+    setTimeout(() => {
+      i = (i + 1) % words.length;
+      el.textContent = words[i];
+      el.classList.remove('out');
+    }, 360);
+  }, 2600);
+</script>
+
+</body>
+</html>
